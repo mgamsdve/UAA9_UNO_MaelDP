@@ -1,0 +1,14 @@
+Mélanger les cartes
+Objectif : Mélanger aléatoirement le paquet de cartes avant la distribution.
+
+Avant le début d'une partie :
+
+• Le paquet de cartes doit être mélangé.
+• Les cartes doivent être placées dans un ordre aléatoire.
+• Chaque partie doit donc avoir une distribution différente.
+
+Résultat attendu :
+Les cartes sont dans un ordre aléatoire avant la distribution.
+
+
+#10 Mélanger les cartes
