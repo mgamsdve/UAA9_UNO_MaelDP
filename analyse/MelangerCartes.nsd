@@ -3,7 +3,7 @@
 	<children>
 		<instruction text="&#34;Random alea = new Random()&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
 		<instruction text="&#34;nbrCarte = jeuCartes.length&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
-		<for text="&#34;for i = 0 to nbrCarte - 1 ; i++ ;&#34;" comment="" counterVar="dummy_counter" startValue="iCarte = 0" endValue="nbrCarte - 1 ; iCarte++ ;" stepConst="1" style="FREETEXT" color="ffffff" disabled="0">
+		<for text="&#34;for iCarte = 0 to nbrCarte - 1 ; iCarte++ ;&#34;" comment="" counterVar="dummy_counter" startValue="iCarte = 0" endValue="nbrCarte - 1 ; iCarte++ ;" stepConst="1" style="FREETEXT" color="ffffff" disabled="0">
 			<qFor>
 				<instruction text="&#34;iAleatoire = alea.Next(0 , nbrCarte)&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
 				<instruction text="&#34;carteTemp = jeuCartes[iCarte]&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
