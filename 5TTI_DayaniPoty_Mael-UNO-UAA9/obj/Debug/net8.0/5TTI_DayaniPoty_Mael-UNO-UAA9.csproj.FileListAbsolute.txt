@@ -1,0 +1,15 @@
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/bin/Debug/net8.0/5TTI_DayaniPoty_Mael-UNO-UAA9
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/bin/Debug/net8.0/5TTI_DayaniPoty_Mael-UNO-UAA9.deps.json
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/bin/Debug/net8.0/5TTI_DayaniPoty_Mael-UNO-UAA9.runtimeconfig.json
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/bin/Debug/net8.0/5TTI_DayaniPoty_Mael-UNO-UAA9.dll
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/bin/Debug/net8.0/5TTI_DayaniPoty_Mael-UNO-UAA9.pdb
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/obj/Debug/net8.0/5TTI_DayaniPoty_Mael-UNO-UAA9.GeneratedMSBuildEditorConfig.editorconfig
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/obj/Debug/net8.0/5TTI_DayaniPoty_Mael-UNO-UAA9.AssemblyInfoInputs.cache
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/obj/Debug/net8.0/5TTI_DayaniPoty_Mael-UNO-UAA9.AssemblyInfo.cs
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/obj/Debug/net8.0/5TTI_DayaniPoty_Mael-UNO-UAA9.csproj.CoreCompileInputs.cache
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/obj/Debug/net8.0/5TTI_DayaniPoty_Mael-UNO-UAA9.sourcelink.json
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/obj/Debug/net8.0/5TTI_DayaniPoty_Mael-UNO-UAA9.dll
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/obj/Debug/net8.0/refint/5TTI_DayaniPoty_Mael-UNO-UAA9.dll
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/obj/Debug/net8.0/5TTI_DayaniPoty_Mael-UNO-UAA9.pdb
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/obj/Debug/net8.0/5TTI_DayaniPoty_Mael-UNO-UAA9.genruntimeconfig.cache
+/Users/mgams/Cours/UAA9_UNO_MaelDP/5TTI_DayaniPoty_Mael-UNO-UAA9/obj/Debug/net8.0/ref/5TTI_DayaniPoty_Mael-UNO-UAA9.dll
