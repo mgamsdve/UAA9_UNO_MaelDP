@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="https://structorizer.fisch.lu" version="3.32-34" preRepeat="until " postFor="to" preReturn="return" postForIn="in" preWhile="while " output="OUTPUT" input="INPUT" preFor="for" preExit="exit" preLeave="leave" ignoreCase="true" preThrow="throw" preForIn="foreach" stepFor="by" namespace="" author="mgams" created="2026-03-26" changedby="mgams" changed="2026-03-26" origin="Structorizer 3.32-34" text="&#34;ChoixCarteJoueur&#34;" comment="" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;carteValide = false&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+		<instruction text="&#34;peutJouer = false&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+		<for text="&#34;for iCarte = 0 to mainJoueur.length - 1 ; iCarte++ ;&#34;" comment="" counterVar="dummy_counter" startValue="iCarte = 0" endValue="mainJoueur.length - 1 ; iCarte++ ;" stepConst="1" style="FREETEXT" color="ffffff" disabled="0">
+			<qFor>
+				<alternative text="&#34;EstCarteJouable(mainJoueur[iCarte], carteTable)&#34;" comment="" color="ffffff" disabled="0">
+					<qTrue>
+						<instruction text="&#34;peutJouer = true&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+					</qTrue>
+					<qFalse>
+					</qFalse>
+				</alternative>
+			</qFor>
+		</for>
+		<alternative text="&#34;peutJouer = false&#34;" comment="" color="ffffff" disabled="0">
+			<qTrue>
+				<instruction text="&#34;OUTPUT &#34;&#34;Aucune carte jouable. Vous piochez une carte.&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+				<instruction text="&#34;PiocherCarte(mainJoueur)&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+			</qTrue>
+			<qFalse>
+				<while text="&#34;while carteValide = false&#34;" comment="" color="ffffff" disabled="0">
+					<qWhile>
+						<instruction text="&#34;OUTPUT &#34;&#34;Choisissez le numéro de la carte à jouer : &#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+						<instruction text="&#34;INPUT choix&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+						<alternative text="&#34;choix &lt; 0 OR choix &gt;= mainJoueur.length&#34;" comment="" color="ffffff" disabled="0">
+							<qTrue>
+								<instruction text="&#34;OUTPUT &#34;&#34;Numéro invalide. Réessayez.&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+							</qTrue>
+							<qFalse>
+								<instruction text="&#34;carteChoisie = mainJoueur[choix]&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+								<alternative text="&#34;EstCarteJouable(carteChoisie, carteTable)&#34;" comment="" color="ffffff" disabled="0">
+									<qTrue>
+										<instruction text="&#34;carteTable = carteChoisie&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+										<instruction text="&#34;mainJoueur = SupprimerCarte(mainJoueur, choix)&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+										<instruction text="&#34;carteValide = true&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+									</qTrue>
+									<qFalse>
+										<instruction text="&#34;OUTPUT &#34;&#34;Carte non valide selon les règles. Réessayez.&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+									</qFalse>
+								</alternative>
+							</qFalse>
+						</alternative>
+					</qWhile>
+				</while>
+			</qFalse>
+		</alternative>
+	</children>
+</root>
