@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("5TTI_DayaniPoty_Mael-UNO-UAA9")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+47f63dbd6df59e477b302adcebbb5d79396383d5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+635557284d1fa4af71f9bf34e49768f44d32b245")]
 [assembly: System.Reflection.AssemblyProductAttribute("5TTI_DayaniPoty_Mael-UNO-UAA9")]
 [assembly: System.Reflection.AssemblyTitleAttribute("5TTI_DayaniPoty_Mael-UNO-UAA9")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

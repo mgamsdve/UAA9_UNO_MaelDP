@@ -27,7 +27,7 @@ public class FonctionProgram
                 indexCarte++;
             }
 
-            jeuCartes[indexCarte] = couleur + "+2"; //carte spéciale +2
+            jeuCartes[indexCarte] = couleur + " +2"; //carte spéciale +2
             indexCarte++;
 
             jeuCartes[indexCarte] = couleur + " Passe ton tour"; //carte spéciale Passe ton tour
@@ -118,7 +118,7 @@ public class FonctionProgram
     //     Console.WriteLine("Nombre de cartes de l'ordinateur : " + mainOrdinateur.Length);
     //     Console.WriteLine("Tour du joueur actuel");
     // }
-    public static void AfficherEtatJeu(string carteTable, string[] mainJoueur, string[] mainOrdinateur)
+    public static void AfficherEtatJeu(string carteTable, string[] mainJoueur, string[] mainOrdinateur, bool tourJoueur)
     {
         Console.WriteLine();
 
@@ -152,7 +152,16 @@ public class FonctionProgram
 
         Console.WriteLine(new string('─', 40));
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("👉 C'est votre tour ! Choisissez une carte :");
+        if (tourJoueur)
+        {
+            Console.WriteLine("👉 C'est votre tour ! Choisissez une carte :");
+
+        }
+        else
+        {
+            Console.WriteLine("👉 C'est le tour de l'ordinateur !");
+
+        }
         Console.ResetColor();
     }
 
@@ -175,19 +184,22 @@ public class FonctionProgram
         Console.ResetColor();
     }
     public static string[] PiocherCarte(ref int indexPaquet, string[] mainJoueur, string[] jeuCartes)
-{
-    string[] nouvellMain = new string[mainJoueur.Length + 1]; // nouveau tableau + 1
-    
-    for (int iCarte = 0; iCarte < mainJoueur.Length; iCarte++) // copie de l'ancienne main
     {
-        nouvellMain[iCarte] = mainJoueur[iCarte];
+        if (indexPaquet >= jeuCartes.Length) // paquet épuisé
+        {
+            Console.WriteLine("Le paquet est épuisé !");
+            return mainJoueur; // on retourne la main sans modification
+        }
+    
+        string[] nouvellMain = new string[mainJoueur.Length + 1];
+        for (int iCarte = 0; iCarte < mainJoueur.Length; iCarte++)
+            nouvellMain[iCarte] = mainJoueur[iCarte];
+    
+        nouvellMain[mainJoueur.Length] = jeuCartes[indexPaquet];
+        indexPaquet++;
+    
+        return nouvellMain;
     }
-    
-    nouvellMain[mainJoueur.Length] = jeuCartes[indexPaquet]; // ajout de la carte piochée
-    indexPaquet++;
-    
-    return nouvellMain;
-}
 
     public static string[] SupprimerCarte(int indexChoix, string[] mainJoueur)
     {
@@ -213,10 +225,14 @@ public class FonctionProgram
         string couleurTable;
         string valeurTable;
         bool estJouable = false;
-        
+    
         if (carteCourante == "+4" || carteCourante == "Changement de couleur") // cartes spéciales toujours jouables
         {
             estJouable = true;
+        }
+        else if (carteTable.Split(' ').Length < 2) // protection si carteTable n'a pas de couleur (+4 sur table)
+        {
+            estJouable = false;
         }
         else
         {
@@ -224,13 +240,13 @@ public class FonctionProgram
             valeurCourante = carteCourante.Split(' ')[1];
             couleurTable = carteTable.Split(' ')[0];
             valeurTable = carteTable.Split(' ')[1];
-            
+        
             if (couleurCourante == couleurTable || valeurCourante == valeurTable) // même couleur ou même valeur
             {
                 estJouable = true;
             }
         }
-        
+    
         return estJouable;
     }
 
@@ -282,5 +298,112 @@ public class FonctionProgram
             }
         }
     }
+    
+    public static void TourOrdinateur(ref string[] mainOrdinateur, string[] jeuCartes, ref int indexPaquet, ref string carteTable)
+    {
+        bool peutJouer = false;
+        int indexJouable = -1;
+
+        for (int iCarte = 0; iCarte < mainOrdinateur.Length; iCarte++) // cherche première carte jouable
+        {
+            if (EstCarteJouable(mainOrdinateur[iCarte], carteTable) && !peutJouer)
+            {
+                peutJouer = true;
+                indexJouable = iCarte;
+            }
+        }
+
+        if (!peutJouer) // aucune carte jouable → pioche
+        {
+            Console.WriteLine("L'ordinateur pioche une carte.");
+            mainOrdinateur = PiocherCarte(ref indexPaquet, mainOrdinateur, jeuCartes);
+        }
+        else // pose la première carte jouable trouvée
+        {
+            Console.WriteLine("L'ordinateur joue : " + mainOrdinateur[indexJouable]);
+            carteTable = mainOrdinateur[indexJouable];
+            mainOrdinateur = SupprimerCarte(indexJouable, mainOrdinateur);
+
+            // l'ordinateur choisit une couleur automatiquement après changement de couleur ou +4
+            if (carteTable == "Changement de couleur" || carteTable == "+4")
+            {
+                string[] couleursValides = { "Rouge", "Bleu", "Vert", "Jaune" };
+                string couleurChoisie = mainOrdinateur.Length > 0 ? mainOrdinateur[0].Split(' ')[0] : "Rouge";
+
+                if (!couleursValides.Contains(couleurChoisie))
+                    couleurChoisie = "Rouge";
+
+                carteTable = couleurChoisie + " Changement de couleur";
+                Console.WriteLine("L'ordinateur choisit la couleur : " + couleurChoisie);
+            }
+        }
+    }
+    public static void AppliquerEffetCarte(string carteJouee, ref string[] mainJoueur, ref string[] mainOrdinateur, string[] jeuCartes, ref int indexPaquet, ref string carteTable, bool tourJoueur, out bool tourSaute)
+{
+    tourSaute = false;
+
+    if (carteJouee.Contains("Passe ton tour"))
+    {
+        tourSaute = true;
+        Console.WriteLine("Le joueur suivant passe son tour !");
+        // neutralise l'effet
+        string couleur = carteJouee.Split(' ')[0];
+        carteTable = couleur + " 0";
+    }
+    else if (carteJouee.Contains("+2")) // suivant pioche 2 et passe
+    {
+        tourSaute = true;
+        if (tourJoueur) // joueur a joué → ordinateur pioche
+        {
+            for (int iCarte = 0; iCarte < 2; iCarte++)
+                mainOrdinateur = PiocherCarte(ref indexPaquet, mainOrdinateur, jeuCartes);
+            Console.WriteLine("L'ordinateur pioche 2 cartes et passe son tour !");
+        }
+        else // ordinateur a joué → joueur pioche
+        {
+            for (int iCarte = 0; iCarte < 2; iCarte++)
+                mainJoueur = PiocherCarte(ref indexPaquet, mainJoueur, jeuCartes);
+            Console.WriteLine("Vous piochez 2 cartes et passez votre tour !");
+        }
+    }
+    else if (carteJouee.Contains("+2"))
+    {
+        tourSaute = true;
+        if (tourJoueur)
+        {
+            for (int iCarte = 0; iCarte < 2; iCarte++)
+                mainOrdinateur = PiocherCarte(ref indexPaquet, mainOrdinateur, jeuCartes);
+            Console.WriteLine("L'ordinateur pioche 2 cartes et passe son tour !");
+        }
+        else
+        {
+            for (int iCarte = 0; iCarte < 2; iCarte++)
+                mainJoueur = PiocherCarte(ref indexPaquet, mainJoueur, jeuCartes);
+            Console.WriteLine("Vous piochez 2 cartes et passez votre tour !");
+        }
+        // neutralise l'effet pour le prochain tour
+        string couleur = carteJouee.Split(' ')[0];
+        carteTable = couleur + " 0"; // remplace par une carte neutre de même couleur
+    }
+    else if (carteJouee == "+4")
+    {
+        tourSaute = true;
+        if (tourJoueur)
+        {
+            for (int iCarte = 0; iCarte < 4; iCarte++)
+                mainOrdinateur = PiocherCarte(ref indexPaquet, mainOrdinateur, jeuCartes);
+            Console.WriteLine("L'ordinateur pioche 4 cartes et passe son tour !");
+        }
+        else
+        {
+            for (int iCarte = 0; iCarte < 4; iCarte++)
+                mainJoueur = PiocherCarte(ref indexPaquet, mainJoueur, jeuCartes);
+            Console.WriteLine("Vous piochez 4 cartes et passez votre tour !");
+        }
+        // neutralise l'effet — pas de couleur sur +4 donc on met Rouge par défaut
+        carteTable = "Rouge 0";
+    }
+}
+    
     
 }
