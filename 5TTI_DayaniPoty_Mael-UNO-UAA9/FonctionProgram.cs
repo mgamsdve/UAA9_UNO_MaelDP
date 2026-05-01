@@ -45,9 +45,9 @@ public class FonctionProgram
         string carteTemp; //carte temporaire utilisée pour l'échange
         int iAleatoire; //index aléatoire utilisé pour l'échange
         int nbrCarte; //nombre total de cartes dans le paquet
-        
+
         Random alea = new Random();
-        nbrCarte = jeuCartes.Length; 
+        nbrCarte = jeuCartes.Length;
 
         for (int iCarte = 0; iCarte < nbrCarte; iCarte++) //index courant des cartes dans le paquet
         {
@@ -69,7 +69,7 @@ public class FonctionProgram
             Console.WriteLine($"{i + 1}. {jeuCartes[i]}");
         }
     }
-    
+
     public static void LireEntier(string question, out int resultat)
     {
         do
@@ -82,7 +82,7 @@ public class FonctionProgram
     public static void DistributionCartes(string[] jeuCartes, out string[] mainJoueur, out string[] mainOrdinateur, out string carteTable, out int indexPaquet)
     {
         indexPaquet = 0;
-        
+
         if (jeuCartes.Length < 15)
         {
             throw new ArgumentException("Le paquet doit contenir au moins 15 cartes.", nameof(jeuCartes));
@@ -102,22 +102,21 @@ public class FonctionProgram
         }
 
         carteTable = jeuCartes[indexPaquet];
+        indexPaquet++; // évite que la carte de table soit repiochée
+
+        // au démarrage on force une carte normale sur la table
+        while (EstCarteSpecialeDepart(carteTable) && indexPaquet < jeuCartes.Length)
+        {
+            carteTable = jeuCartes[indexPaquet];
+            indexPaquet++;
+        }
+
+        if (EstCarteSpecialeDepart(carteTable))
+        {
+            carteTable = "Rouge 0";
+        }
     }
 
-    // public static void AfficherEtatJeu(string carteTable, string[] mainJoueur, string[] mainOrdinateur)
-    // {
-    //     Console.WriteLine();
-    //     Console.WriteLine("Carte sur la table : " + carteTable);
-    //     Console.WriteLine("Cartes du joueur :");
-    //
-    //     for (int iCarte = 0; iCarte < mainJoueur.Length; iCarte++)
-    //     {
-    //         Console.WriteLine(iCarte + " : " + mainJoueur[iCarte]);
-    //     }
-    //
-    //     Console.WriteLine("Nombre de cartes de l'ordinateur : " + mainOrdinateur.Length);
-    //     Console.WriteLine("Tour du joueur actuel");
-    // }
     public static void AfficherEtatJeu(string carteTable, string[] mainJoueur, string[] mainOrdinateur, bool tourJoueur)
     {
         Console.WriteLine();
@@ -167,22 +166,22 @@ public class FonctionProgram
 
     private static void AfficherCarte(string carte)
     {
-        // Format attendu : "Rouge 5", "Bleu +2", "Jaune Inversion", etc.
         string[] parts = carte.Split(' ');
         string couleur = parts[0];
 
         Console.ForegroundColor = couleur switch
         {
-            "Rouge"  => ConsoleColor.Red,
-            "Bleu"   => ConsoleColor.Blue,
-            "Vert"   => ConsoleColor.Green,
-            "Jaune"  => ConsoleColor.Yellow,
-            _        => ConsoleColor.White
+            "Rouge" => ConsoleColor.Red,
+            "Bleu" => ConsoleColor.Blue,
+            "Vert" => ConsoleColor.Green,
+            "Jaune" => ConsoleColor.Yellow,
+            _ => ConsoleColor.White
         };
 
         Console.Write(carte);
         Console.ResetColor();
     }
+
     public static string[] PiocherCarte(ref int indexPaquet, string[] mainJoueur, string[] jeuCartes)
     {
         if (indexPaquet >= jeuCartes.Length) // paquet épuisé
@@ -190,14 +189,14 @@ public class FonctionProgram
             Console.WriteLine("Le paquet est épuisé !");
             return mainJoueur; // on retourne la main sans modification
         }
-    
+
         string[] nouvellMain = new string[mainJoueur.Length + 1];
         for (int iCarte = 0; iCarte < mainJoueur.Length; iCarte++)
             nouvellMain[iCarte] = mainJoueur[iCarte];
-    
+
         nouvellMain[mainJoueur.Length] = jeuCartes[indexPaquet];
         indexPaquet++;
-    
+
         return nouvellMain;
     }
 
@@ -205,7 +204,7 @@ public class FonctionProgram
     {
         string[] nouvellMain = new string[mainJoueur.Length - 1]; // nouveau tableau - 1
         int iNouveau = 0;
-        
+
         for (int iCarte = 0; iCarte < mainJoueur.Length; iCarte++) // copie sans la carte à supprimer
         {
             if (iCarte != indexChoix)
@@ -214,7 +213,7 @@ public class FonctionProgram
                 iNouveau++;
             }
         }
-        
+
         return nouvellMain;
     }
 
@@ -225,7 +224,7 @@ public class FonctionProgram
         string couleurTable;
         string valeurTable;
         bool estJouable = false;
-    
+
         if (carteCourante == "+4" || carteCourante == "Changement de couleur") // cartes spéciales toujours jouables
         {
             estJouable = true;
@@ -240,23 +239,25 @@ public class FonctionProgram
             valeurCourante = carteCourante.Split(' ')[1];
             couleurTable = carteTable.Split(' ')[0];
             valeurTable = carteTable.Split(' ')[1];
-        
+
             if (couleurCourante == couleurTable || valeurCourante == valeurTable) // même couleur ou même valeur
             {
                 estJouable = true;
             }
         }
-    
+
         return estJouable;
     }
 
-    public static void ChoixCarteJoueur(ref string[] mainJoueur, string[] jeuCartes, ref int indexPaquet, ref string carteTable)
+    public static void ChoixCarteJoueur(ref string[] mainJoueur, string[] jeuCartes, ref int indexPaquet, ref string carteTable, out string carteJouee)
     {
         bool carteValide = false;
         bool peutJouer = false;
         int choix;
         string carteChoisie;
-        
+
+        carteJouee = "";
+
         for (int iCarte = 0; iCarte < mainJoueur.Length; iCarte++) // vérifie si au moins une carte jouable
         {
             if (EstCarteJouable(mainJoueur[iCarte], carteTable))
@@ -264,7 +265,7 @@ public class FonctionProgram
                 peutJouer = true;
             }
         }
-        
+
         if (!peutJouer) // aucune carte jouable -> pioche
         {
             Console.WriteLine("Aucune carte jouable. Vous piochez une carte.");
@@ -275,7 +276,7 @@ public class FonctionProgram
             while (!carteValide) // boucle jusqu'à un choix valide
             {
                 LireEntier("Entrez le numéro de la carte : ", out choix);
-                
+
                 if (choix < 0 || choix >= mainJoueur.Length) // numéro hors plage
                 {
                     Console.WriteLine("Numéro invalide. Réessayez.");
@@ -283,10 +284,11 @@ public class FonctionProgram
                 else
                 {
                     carteChoisie = mainJoueur[choix];
-                    
+
                     if (EstCarteJouable(carteChoisie, carteTable)) // carte valide selon les règles
                     {
                         carteTable = carteChoisie;
+                        carteJouee = carteChoisie; // garde la carte originale pour l'effet
                         mainJoueur = SupprimerCarte(choix, mainJoueur);
                         carteValide = true;
                     }
@@ -298,11 +300,13 @@ public class FonctionProgram
             }
         }
     }
-    
-    public static void TourOrdinateur(ref string[] mainOrdinateur, string[] jeuCartes, ref int indexPaquet, ref string carteTable)
+
+    public static void TourOrdinateur(ref string[] mainOrdinateur, string[] jeuCartes, ref int indexPaquet, ref string carteTable, out string carteJouee)
     {
         bool peutJouer = false;
         int indexJouable = -1;
+
+        carteJouee = "";
 
         for (int iCarte = 0; iCarte < mainOrdinateur.Length; iCarte++) // cherche première carte jouable
         {
@@ -320,90 +324,125 @@ public class FonctionProgram
         }
         else // pose la première carte jouable trouvée
         {
-            Console.WriteLine("L'ordinateur joue : " + mainOrdinateur[indexJouable]);
-            carteTable = mainOrdinateur[indexJouable];
+            carteJouee = mainOrdinateur[indexJouable];
+            Console.WriteLine("L'ordinateur joue : " + carteJouee);
+            carteTable = carteJouee;
             mainOrdinateur = SupprimerCarte(indexJouable, mainOrdinateur);
+        }
+    }
 
-            // l'ordinateur choisit une couleur automatiquement après changement de couleur ou +4
-            if (carteTable == "Changement de couleur" || carteTable == "+4")
+    public static void AppliquerEffetCarte(string carteJouee, ref string[] mainJoueur, ref string[] mainOrdinateur, string[] jeuCartes, ref int indexPaquet, ref string carteTable, bool tourJoueur, out bool tourSaute)
+    {
+        tourSaute = false;
+
+        if (carteJouee == "")
+        {
+            return; // rien à appliquer si on a juste pioché
+        }
+
+        if (carteJouee.Contains("Passe ton tour"))
+        {
+            tourSaute = true;
+            Console.WriteLine("Le joueur suivant passe son tour !");
+
+            // neutralise l'effet mais garde la couleur
+            string couleur = carteJouee.Split(' ')[0];
+            carteTable = couleur + " 0";
+        }
+        else if (carteJouee.Contains("+2"))
+        {
+            tourSaute = true;
+
+            if (tourJoueur) // joueur a joué → ordinateur pioche
             {
-                string[] couleursValides = { "Rouge", "Bleu", "Vert", "Jaune" };
-                string couleurChoisie = mainOrdinateur.Length > 0 ? mainOrdinateur[0].Split(' ')[0] : "Rouge";
+                for (int iCarte = 0; iCarte < 2; iCarte++)
+                    mainOrdinateur = PiocherCarte(ref indexPaquet, mainOrdinateur, jeuCartes);
+                Console.WriteLine("L'ordinateur pioche 2 cartes et passe son tour !");
+            }
+            else // ordinateur a joué → joueur pioche
+            {
+                for (int iCarte = 0; iCarte < 2; iCarte++)
+                    mainJoueur = PiocherCarte(ref indexPaquet, mainJoueur, jeuCartes);
+                Console.WriteLine("Vous piochez 2 cartes et passez votre tour !");
+            }
 
-                if (!couleursValides.Contains(couleurChoisie))
-                    couleurChoisie = "Rouge";
+            // neutralise l'effet mais garde la couleur
+            string couleur = carteJouee.Split(' ')[0];
+            carteTable = couleur + " 0";
+        }
+        else if (carteJouee == "+4")
+        {
+            tourSaute = true;
 
-                carteTable = couleurChoisie + " Changement de couleur";
+            if (tourJoueur)
+            {
+                for (int iCarte = 0; iCarte < 4; iCarte++)
+                    mainOrdinateur = PiocherCarte(ref indexPaquet, mainOrdinateur, jeuCartes);
+                Console.WriteLine("L'ordinateur pioche 4 cartes et passe son tour !");
+
+                string couleurChoisie = ChoisirCouleurJoueur();
+                carteTable = couleurChoisie + " +4";
+            }
+            else
+            {
+                for (int iCarte = 0; iCarte < 4; iCarte++)
+                    mainJoueur = PiocherCarte(ref indexPaquet, mainJoueur, jeuCartes);
+                Console.WriteLine("Vous piochez 4 cartes et passez votre tour !");
+
+                string couleurChoisie = ChoisirCouleurOrdinateur(mainOrdinateur);
                 Console.WriteLine("L'ordinateur choisit la couleur : " + couleurChoisie);
+                carteTable = couleurChoisie + " +4";
+            }
+        }
+        else if (carteJouee == "Changement de couleur")
+        {
+            if (tourJoueur)
+            {
+                string couleurChoisie = ChoisirCouleurJoueur();
+                carteTable = couleurChoisie + " Changement de couleur";
+            }
+            else
+            {
+                string couleurChoisie = ChoisirCouleurOrdinateur(mainOrdinateur);
+                Console.WriteLine("L'ordinateur choisit la couleur : " + couleurChoisie);
+                carteTable = couleurChoisie + " Changement de couleur";
             }
         }
     }
-    public static void AppliquerEffetCarte(string carteJouee, ref string[] mainJoueur, ref string[] mainOrdinateur, string[] jeuCartes, ref int indexPaquet, ref string carteTable, bool tourJoueur, out bool tourSaute)
-{
-    tourSaute = false;
 
-    if (carteJouee.Contains("Passe ton tour"))
+    private static bool EstCarteSpecialeDepart(string carte)
     {
-        tourSaute = true;
-        Console.WriteLine("Le joueur suivant passe son tour !");
-        // neutralise l'effet
-        string couleur = carteJouee.Split(' ')[0];
-        carteTable = couleur + " 0";
+        return carte == "+4" || carte == "Changement de couleur" || carte.Contains("+2") || carte.Contains("Passe ton tour");
     }
-    else if (carteJouee.Contains("+2")) // suivant pioche 2 et passe
+
+    private static string ChoisirCouleurJoueur()
     {
-        tourSaute = true;
-        if (tourJoueur) // joueur a joué → ordinateur pioche
+        while (true)
         {
-            for (int iCarte = 0; iCarte < 2; iCarte++)
-                mainOrdinateur = PiocherCarte(ref indexPaquet, mainOrdinateur, jeuCartes);
-            Console.WriteLine("L'ordinateur pioche 2 cartes et passe son tour !");
-        }
-        else // ordinateur a joué → joueur pioche
-        {
-            for (int iCarte = 0; iCarte < 2; iCarte++)
-                mainJoueur = PiocherCarte(ref indexPaquet, mainJoueur, jeuCartes);
-            Console.WriteLine("Vous piochez 2 cartes et passez votre tour !");
+            Console.WriteLine("Choisissez une couleur (Rouge, Bleu, Vert, Jaune) :");
+            string saisie = (Console.ReadLine() ?? "").Trim().ToLower();
+
+            if (saisie == "rouge") return "Rouge";
+            if (saisie == "bleu") return "Bleu";
+            if (saisie == "vert") return "Vert";
+            if (saisie == "jaune") return "Jaune";
+
+            Console.WriteLine("Couleur invalide. Réessayez.");
         }
     }
-    else if (carteJouee.Contains("+2"))
+
+    private static string ChoisirCouleurOrdinateur(string[] mainOrdinateur)
     {
-        tourSaute = true;
-        if (tourJoueur)
+        for (int iCarte = 0; iCarte < mainOrdinateur.Length; iCarte++)
         {
-            for (int iCarte = 0; iCarte < 2; iCarte++)
-                mainOrdinateur = PiocherCarte(ref indexPaquet, mainOrdinateur, jeuCartes);
-            Console.WriteLine("L'ordinateur pioche 2 cartes et passe son tour !");
+            string couleur = mainOrdinateur[iCarte].Split(' ')[0];
+
+            if (couleur == "Rouge" || couleur == "Bleu" || couleur == "Vert" || couleur == "Jaune")
+            {
+                return couleur;
+            }
         }
-        else
-        {
-            for (int iCarte = 0; iCarte < 2; iCarte++)
-                mainJoueur = PiocherCarte(ref indexPaquet, mainJoueur, jeuCartes);
-            Console.WriteLine("Vous piochez 2 cartes et passez votre tour !");
-        }
-        // neutralise l'effet pour le prochain tour
-        string couleur = carteJouee.Split(' ')[0];
-        carteTable = couleur + " 0"; // remplace par une carte neutre de même couleur
+
+        return "Rouge";
     }
-    else if (carteJouee == "+4")
-    {
-        tourSaute = true;
-        if (tourJoueur)
-        {
-            for (int iCarte = 0; iCarte < 4; iCarte++)
-                mainOrdinateur = PiocherCarte(ref indexPaquet, mainOrdinateur, jeuCartes);
-            Console.WriteLine("L'ordinateur pioche 4 cartes et passe son tour !");
-        }
-        else
-        {
-            for (int iCarte = 0; iCarte < 4; iCarte++)
-                mainJoueur = PiocherCarte(ref indexPaquet, mainJoueur, jeuCartes);
-            Console.WriteLine("Vous piochez 4 cartes et passez votre tour !");
-        }
-        // neutralise l'effet — pas de couleur sur +4 donc on met Rouge par défaut
-        carteTable = "Rouge 0";
-    }
-}
-    
-    
 }

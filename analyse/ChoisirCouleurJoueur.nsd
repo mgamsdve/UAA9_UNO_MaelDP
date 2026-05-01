@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="https://structorizer.fisch.lu" version="3.32-34" preRepeat="until " postFor="to" preReturn="return" postForIn="in" preWhile="while " output="OUTPUT" input="INPUT" preFor="for" preExit="exit" preLeave="leave" ignoreCase="true" preThrow="throw" preForIn="foreach" stepFor="by" author="mgams" created="2026-05-01" changedby="codex" changed="2026-05-01" origin="Structorizer 3.32-34" text="&#34;ChoisirCouleurJoueur&#34;" comment="" color="ffffff" type="program" style="nice">
+	<children>
+		<while text="&#34;while true&#34;" comment="" color="ffffff" disabled="0">
+			<qWhile>
+				<instruction text="&#34;OUTPUT &#34;&#34;Choisissez une couleur (Rouge, Bleu, Vert, Jaune) :&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+				<instruction text="&#34;INPUT saisie&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+				<instruction text="&#34;saisie = saisie.Trim().ToLower()&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+				<alternative text="&#34;saisie = &#34;&#34;rouge&#34;&#34;&#34;" comment="" color="ffffff" disabled="0">
+					<qTrue>
+						<instruction text="&#34;return &#34;&#34;Rouge&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+					</qTrue>
+					<qFalse>
+						<alternative text="&#34;saisie = &#34;&#34;bleu&#34;&#34;&#34;" comment="" color="ffffff" disabled="0">
+							<qTrue>
+								<instruction text="&#34;return &#34;&#34;Bleu&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+							</qTrue>
+							<qFalse>
+								<alternative text="&#34;saisie = &#34;&#34;vert&#34;&#34;&#34;" comment="" color="ffffff" disabled="0">
+									<qTrue>
+										<instruction text="&#34;return &#34;&#34;Vert&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+									</qTrue>
+									<qFalse>
+										<alternative text="&#34;saisie = &#34;&#34;jaune&#34;&#34;&#34;" comment="" color="ffffff" disabled="0">
+											<qTrue>
+												<instruction text="&#34;return &#34;&#34;Jaune&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+											</qTrue>
+											<qFalse>
+												<instruction text="&#34;OUTPUT &#34;&#34;Couleur invalide. Réessayez.&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+											</qFalse>
+										</alternative>
+									</qFalse>
+								</alternative>
+							</qFalse>
+						</alternative>
+					</qFalse>
+				</alternative>
+			</qWhile>
+		</while>
+	</children>
+</root>

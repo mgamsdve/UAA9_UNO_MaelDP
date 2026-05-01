@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="https://structorizer.fisch.lu" version="3.32-34" preRepeat="until " postFor="to" preReturn="return" postForIn="in" preWhile="while " output="OUTPUT" input="INPUT" preFor="for" preExit="exit" preLeave="leave" ignoreCase="true" preThrow="throw" preForIn="foreach" stepFor="by" namespace="" author="mgams" created="2026-04-09" changedby="codex" changed="2026-05-01" origin="Structorizer 3.32-34" text="&#34;AppliquerEffetCarte&#34;" comment="" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;tourSaute = false&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+		<alternative text="&#34;carteJouee = &#34;&#34;&#34;&#34;&#34;" comment="" color="ffffff" disabled="0">
+			<qTrue>
+				<instruction text="&#34;return&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+			</qTrue>
+			<qFalse>
+				<alternative text="&#34;carteJouee.Contains(&#34;&#34;Passe ton tour&#34;&#34;)&#34;" comment="" color="ffffff" disabled="0">
+					<qTrue>
+						<instruction text="&#34;tourSaute = true&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+						<instruction text="&#34;OUTPUT &#34;&#34;Le joueur suivant passe son tour !&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+						<instruction text="&#34;couleur = carteJouee.Split(' ')[0]&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+						<instruction text="&#34;carteTable = couleur + &#34;&#34; 0&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+					</qTrue>
+					<qFalse>
+						<alternative text="&#34;carteJouee.Contains(&#34;&#34;+2&#34;&#34;)&#34;" comment="" color="ffffff" disabled="0">
+							<qTrue>
+								<instruction text="&#34;tourSaute = true&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+								<alternative text="&#34;tourJoueur = true&#34;" comment="" color="ffffff" disabled="0">
+									<qTrue>
+										<for text="&#34;for iCarte = 0 to 1 ; iCarte++ ;&#34;" comment="" counterVar="dummy_counter" startValue="iCarte = 0" endValue="1 ; iCarte++ ;" stepConst="1" style="FREETEXT" color="ffffff" disabled="0">
+											<qFor>
+												<instruction text="&#34;mainOrdinateur = PiocherCarte(indexPaquet, mainOrdinateur, jeuCartes)&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+											</qFor>
+										</for>
+										<instruction text="&#34;OUTPUT &#34;&#34;L'ordinateur pioche 2 cartes et passe son tour !&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+									</qTrue>
+									<qFalse>
+										<for text="&#34;for iCarte = 0 to 1 ; iCarte++ ;&#34;" comment="" counterVar="dummy_counter" startValue="iCarte = 0" endValue="1 ; iCarte++ ;" stepConst="1" style="FREETEXT" color="ffffff" disabled="0">
+											<qFor>
+												<instruction text="&#34;mainJoueur = PiocherCarte(indexPaquet, mainJoueur, jeuCartes)&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+											</qFor>
+										</for>
+										<instruction text="&#34;OUTPUT &#34;&#34;Vous piochez 2 cartes et passez votre tour !&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+									</qFalse>
+								</alternative>
+								<instruction text="&#34;couleur = carteJouee.Split(' ')[0]&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+								<instruction text="&#34;carteTable = couleur + &#34;&#34; 0&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+							</qTrue>
+							<qFalse>
+								<alternative text="&#34;carteJouee = &#34;&#34;+4&#34;&#34;&#34;" comment="" color="ffffff" disabled="0">
+									<qTrue>
+										<instruction text="&#34;tourSaute = true&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+										<alternative text="&#34;tourJoueur = true&#34;" comment="" color="ffffff" disabled="0">
+											<qTrue>
+												<for text="&#34;for iCarte = 0 to 3 ; iCarte++ ;&#34;" comment="" counterVar="dummy_counter" startValue="iCarte = 0" endValue="3 ; iCarte++ ;" stepConst="1" style="FREETEXT" color="ffffff" disabled="0">
+													<qFor>
+														<instruction text="&#34;mainOrdinateur = PiocherCarte(indexPaquet, mainOrdinateur, jeuCartes)&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+													</qFor>
+												</for>
+												<instruction text="&#34;OUTPUT &#34;&#34;L'ordinateur pioche 4 cartes et passe son tour !&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+												<instruction text="&#34;couleurChoisie = ChoisirCouleurJoueur()&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+												<instruction text="&#34;carteTable = couleurChoisie + &#34;&#34; +4&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+											</qTrue>
+											<qFalse>
+												<for text="&#34;for iCarte = 0 to 3 ; iCarte++ ;&#34;" comment="" counterVar="dummy_counter" startValue="iCarte = 0" endValue="3 ; iCarte++ ;" stepConst="1" style="FREETEXT" color="ffffff" disabled="0">
+													<qFor>
+														<instruction text="&#34;mainJoueur = PiocherCarte(indexPaquet, mainJoueur, jeuCartes)&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+													</qFor>
+												</for>
+												<instruction text="&#34;OUTPUT &#34;&#34;Vous piochez 4 cartes et passez votre tour !&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+												<instruction text="&#34;couleurChoisie = ChoisirCouleurOrdinateur(mainOrdinateur)&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+												<instruction text="&#34;OUTPUT &#34;&#34;L'ordinateur choisit la couleur : &#34;&#34; + couleurChoisie&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+												<instruction text="&#34;carteTable = couleurChoisie + &#34;&#34; +4&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+											</qFalse>
+										</alternative>
+									</qTrue>
+									<qFalse>
+										<alternative text="&#34;carteJouee = &#34;&#34;Changement de couleur&#34;&#34;&#34;" comment="" color="ffffff" disabled="0">
+											<qTrue>
+												<alternative text="&#34;tourJoueur = true&#34;" comment="" color="ffffff" disabled="0">
+													<qTrue>
+														<instruction text="&#34;couleurChoisie = ChoisirCouleurJoueur()&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+														<instruction text="&#34;carteTable = couleurChoisie + &#34;&#34; Changement de couleur&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+													</qTrue>
+													<qFalse>
+														<instruction text="&#34;couleurChoisie = ChoisirCouleurOrdinateur(mainOrdinateur)&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+														<instruction text="&#34;OUTPUT &#34;&#34;L'ordinateur choisit la couleur : &#34;&#34; + couleurChoisie&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+														<instruction text="&#34;carteTable = couleurChoisie + &#34;&#34; Changement de couleur&#34;&#34;&#34;" comment="" color="ffffff" rotated="0" disabled="0"></instruction>
+													</qFalse>
+												</alternative>
+											</qTrue>
+											<qFalse>
+											</qFalse>
+										</alternative>
+									</qFalse>
+								</alternative>
+							</qFalse>
+						</alternative>
+					</qFalse>
+				</alternative>
+			</qFalse>
+		</alternative>
+	</children>
+</root>
