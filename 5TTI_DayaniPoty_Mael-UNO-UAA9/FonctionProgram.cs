@@ -410,6 +410,40 @@ public class FonctionProgram
         }
     }
 
+    public static void DetectionUno(string[] main, bool tourJoueur)
+    {
+        if (main.Length == 1)
+        {
+            if (tourJoueur)
+            {
+                Console.WriteLine("UNO ! Il vous reste une carte !");
+            }
+            else
+            {
+                Console.WriteLine("UNO ! Il reste une carte a l'ordinateur !");
+            }
+        }
+    }
+
+    public static bool VerifierFinPartie(string[] mainJoueur, string[] mainOrdinateur, out string gagnant)
+    {
+        gagnant = "";
+
+        if (mainJoueur.Length == 0)
+        {
+            gagnant = "Vous";
+            return true;
+        }
+
+        if (mainOrdinateur.Length == 0)
+        {
+            gagnant = "L'ordinateur";
+            return true;
+        }
+
+        return false;
+    }
+
     private static bool EstCarteSpecialeDepart(string carte)
     {
         return carte == "+4" || carte == "Changement de couleur" || carte.Contains("+2") || carte.Contains("Passe ton tour");
