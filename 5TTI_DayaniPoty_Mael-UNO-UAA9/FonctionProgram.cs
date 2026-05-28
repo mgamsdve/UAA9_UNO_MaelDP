@@ -186,8 +186,18 @@ public class FonctionProgram
     {
         if (indexPaquet >= jeuCartes.Length) // paquet épuisé
         {
-            Console.WriteLine("Le paquet est épuisé !");
-            return mainJoueur; // on retourne la main sans modification
+            Console.WriteLine("Le paquet est épuisé ! Nouveau paquet mélangé.");
+
+            string[] nouveauPaquet;
+            InitialiserCartes(out nouveauPaquet);
+            MelangerCartes(nouveauPaquet);
+
+            for (int iCarte = 0; iCarte < jeuCartes.Length; iCarte++)
+            {
+                jeuCartes[iCarte] = nouveauPaquet[iCarte];
+            }
+
+            indexPaquet = 0;
         }
 
         string[] nouvellMain = new string[mainJoueur.Length + 1];
