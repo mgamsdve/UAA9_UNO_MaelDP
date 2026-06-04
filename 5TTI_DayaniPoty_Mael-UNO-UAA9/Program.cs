@@ -22,6 +22,7 @@ class Program
 
         do
         {
+            // Prépare une nouvelle partie.
             FonctionProgram.InitialiserCartes(out jeuCartes);
             FonctionProgram.MelangerCartes(jeuCartes);
             FonctionProgram.DistributionCartes(jeuCartes, out mainJoueur, out mainOrdinateur, out carteTable, out indexPaquet);
@@ -29,6 +30,7 @@ class Program
             sauterTourJoueur = false;
             sauterTourOrdi = false;
 
+            // Boucle principale : alternance joueur / ordinateur.
             while (true)
             {
                 if (sauterTourJoueur)
@@ -38,6 +40,7 @@ class Program
                 }
                 else
                 {
+                    // Tour du joueur.
                     FonctionProgram.AfficherEtatJeu(carteTable, mainJoueur, mainOrdinateur, true);
                     FonctionProgram.ChoixCarteJoueur(ref mainJoueur, jeuCartes, ref indexPaquet, ref carteTable, out carteJoueeJoueur);
                     FonctionProgram.AppliquerEffetCarte(carteJoueeJoueur, ref mainJoueur, ref mainOrdinateur, jeuCartes, ref indexPaquet, ref carteTable, true, out tourSaute);
@@ -62,6 +65,7 @@ class Program
                 }
                 else
                 {
+                    // Tour de l'ordinateur.
                     FonctionProgram.AfficherEtatJeu(carteTable, mainJoueur, mainOrdinateur, false);
                     FonctionProgram.TourOrdinateur(ref mainOrdinateur, jeuCartes, ref indexPaquet, ref carteTable, out carteJoueeOrdi);
                     FonctionProgram.AppliquerEffetCarte(carteJoueeOrdi, ref mainJoueur, ref mainOrdinateur, jeuCartes, ref indexPaquet, ref carteTable, false, out tourSaute);
@@ -80,6 +84,7 @@ class Program
                 }
             }
 
+            // Un espace permet de relancer directement une partie.
             Console.WriteLine("Voulez-vous recommencer une nouvelle partie ? (Entrez un espace pour recommencer, ou n'importe quelle autre touche pour quitter)");
             recommencer = Console.ReadLine();
         } while (recommencer == " ");

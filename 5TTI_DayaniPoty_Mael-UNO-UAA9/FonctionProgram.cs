@@ -2,6 +2,10 @@ namespace _5TTI_DayaniPoty_Mael_UNO_UAA9;
 
 public class FonctionProgram
 {
+    /// <summary>
+    /// Affiche l'accueil et attend une saisie pour commencer.
+    /// </summary>
+    /// <param name="touche">Touche saisie, renvoyée avec out.</param>
     public static void AffichageAccueil(out string touche)
     {
         Console.WriteLine("Bienvenue dans le jeu UNO !");
@@ -13,6 +17,10 @@ public class FonctionProgram
         touche = Console.ReadLine() ?? string.Empty;
     }
 
+    /// <summary>
+    /// Crée le paquet de cartes UNO utilisé dans la partie.
+    /// </summary>
+    /// <param name="jeuCartes">Paquet créé, renvoyé avec out.</param>
     public static void InitialiserCartes(out string[] jeuCartes)
     {
         jeuCartes = new string[50];
@@ -40,6 +48,10 @@ public class FonctionProgram
         jeuCartes[indexCarte] = "Changement de couleur"; //carte spéciale Changement de couleur
     }
 
+    /// <summary>
+    /// Mélange les cartes du paquet.
+    /// </summary>
+    /// <param name="jeuCartes">Paquet à mélanger.</param>
     public static void MelangerCartes(string[] jeuCartes)
     {
         string carteTemp; //carte temporaire utilisée pour l'échange
@@ -58,7 +70,13 @@ public class FonctionProgram
         }
     }
 
-    public static void AfficherPremieresCartes(string[] jeuCartes, int nombre, string titre) //sert a tester les carte du paquet avant et après mélange
+    /// <summary>
+    /// Affiche quelques cartes du paquet pour tester le mélange.
+    /// </summary>
+    /// <param name="jeuCartes">Paquet à afficher.</param>
+    /// <param name="nombre">Nombre maximum de cartes affichées.</param>
+    /// <param name="titre">Titre affiché avant la liste.</param>
+    public static void AfficherPremieresCartes(string[] jeuCartes, int nombre, string titre)
     {
         Console.WriteLine();
         Console.WriteLine(titre);
@@ -70,6 +88,11 @@ public class FonctionProgram
         }
     }
 
+    /// <summary>
+    /// Demande un entier tant que la saisie n'est pas valide.
+    /// </summary>
+    /// <param name="question">Question affichée au joueur.</param>
+    /// <param name="resultat">Entier saisi, renvoyé avec out.</param>
     public static void LireEntier(string question, out int resultat)
     {
         do
@@ -79,6 +102,14 @@ public class FonctionProgram
         while (!int.TryParse(Console.ReadLine(), out resultat));
     }
 
+    /// <summary>
+    /// Distribue les cartes de départ et choisit la première carte sur la table.
+    /// </summary>
+    /// <param name="jeuCartes">Paquet déjà mélangé.</param>
+    /// <param name="mainJoueur">Main du joueur, renvoyée avec out.</param>
+    /// <param name="mainOrdinateur">Main de l'ordinateur, renvoyée avec out.</param>
+    /// <param name="carteTable">Carte de départ sur la table, renvoyée avec out.</param>
+    /// <param name="indexPaquet">Prochaine position de pioche, renvoyée avec out.</param>
     public static void DistributionCartes(string[] jeuCartes, out string[] mainJoueur, out string[] mainOrdinateur, out string carteTable, out int indexPaquet)
     {
         indexPaquet = 0;
@@ -117,6 +148,13 @@ public class FonctionProgram
         }
     }
 
+    /// <summary>
+    /// Affiche la carte posée, les mains et le joueur actif.
+    /// </summary>
+    /// <param name="carteTable">Carte actuellement sur la table.</param>
+    /// <param name="mainJoueur">Cartes visibles du joueur.</param>
+    /// <param name="mainOrdinateur">Cartes cachées de l'ordinateur.</param>
+    /// <param name="tourJoueur">Vrai si c'est le tour du joueur.</param>
     public static void AfficherEtatJeu(string carteTable, string[] mainJoueur, string[] mainOrdinateur, bool tourJoueur)
     {
         Console.WriteLine();
@@ -164,6 +202,10 @@ public class FonctionProgram
         Console.ResetColor();
     }
 
+    /// <summary>
+    /// Affiche une carte avec la couleur de console adaptée.
+    /// </summary>
+    /// <param name="carte">Carte à afficher.</param>
     private static void AfficherCarte(string carte)
     {
         string[] parts = carte.Split(' ');
@@ -182,6 +224,13 @@ public class FonctionProgram
         Console.ResetColor();
     }
 
+    /// <summary>
+    /// Ajoute une carte piochée à une main.
+    /// </summary>
+    /// <param name="indexPaquet">Index de pioche, modifié avec ref.</param>
+    /// <param name="mainJoueur">Main qui reçoit la carte.</param>
+    /// <param name="jeuCartes">Paquet de cartes utilisé.</param>
+    /// <returns>Nouvelle main avec la carte ajoutée.</returns>
     public static string[] PiocherCarte(ref int indexPaquet, string[] mainJoueur, string[] jeuCartes)
     {
         if (indexPaquet >= jeuCartes.Length) // paquet épuisé
@@ -210,6 +259,12 @@ public class FonctionProgram
         return nouvellMain;
     }
 
+    /// <summary>
+    /// Retire une carte d'une main.
+    /// </summary>
+    /// <param name="indexChoix">Position de la carte à retirer.</param>
+    /// <param name="mainJoueur">Main à modifier.</param>
+    /// <returns>Nouvelle main sans la carte choisie.</returns>
     public static string[] SupprimerCarte(int indexChoix, string[] mainJoueur)
     {
         string[] nouvellMain = new string[mainJoueur.Length - 1]; // nouveau tableau - 1
@@ -227,6 +282,12 @@ public class FonctionProgram
         return nouvellMain;
     }
 
+    /// <summary>
+    /// Vérifie si une carte peut être jouée sur la carte de table.
+    /// </summary>
+    /// <param name="carteCourante">Carte que l'on veut jouer.</param>
+    /// <param name="carteTable">Carte actuellement sur la table.</param>
+    /// <returns>Vrai si la carte est jouable.</returns>
     public static bool EstCarteJouable(string carteCourante, string carteTable)
     {
         string couleurCourante;
@@ -259,6 +320,14 @@ public class FonctionProgram
         return estJouable;
     }
 
+    /// <summary>
+    /// Gère le choix de carte du joueur ou sa pioche.
+    /// </summary>
+    /// <param name="mainJoueur">Main du joueur, modifiée avec ref.</param>
+    /// <param name="jeuCartes">Paquet de pioche.</param>
+    /// <param name="indexPaquet">Index de pioche, modifié avec ref.</param>
+    /// <param name="carteTable">Carte sur la table, modifiée avec ref.</param>
+    /// <param name="carteJouee">Carte jouée, renvoyée avec out.</param>
     public static void ChoixCarteJoueur(ref string[] mainJoueur, string[] jeuCartes, ref int indexPaquet, ref string carteTable, out string carteJouee)
     {
         bool carteValide = false;
@@ -311,6 +380,14 @@ public class FonctionProgram
         }
     }
 
+    /// <summary>
+    /// Gère le tour de l'ordinateur.
+    /// </summary>
+    /// <param name="mainOrdinateur">Main de l'ordinateur, modifiée avec ref.</param>
+    /// <param name="jeuCartes">Paquet de pioche.</param>
+    /// <param name="indexPaquet">Index de pioche, modifié avec ref.</param>
+    /// <param name="carteTable">Carte sur la table, modifiée avec ref.</param>
+    /// <param name="carteJouee">Carte jouée, renvoyée avec out.</param>
     public static void TourOrdinateur(ref string[] mainOrdinateur, string[] jeuCartes, ref int indexPaquet, ref string carteTable, out string carteJouee)
     {
         bool peutJouer = false;
@@ -341,6 +418,17 @@ public class FonctionProgram
         }
     }
 
+    /// <summary>
+    /// Applique l'effet d'une carte spéciale.
+    /// </summary>
+    /// <param name="carteJouee">Carte jouée pendant le tour.</param>
+    /// <param name="mainJoueur">Main du joueur, modifiée avec ref.</param>
+    /// <param name="mainOrdinateur">Main de l'ordinateur, modifiée avec ref.</param>
+    /// <param name="jeuCartes">Paquet de pioche.</param>
+    /// <param name="indexPaquet">Index de pioche, modifié avec ref.</param>
+    /// <param name="carteTable">Carte sur la table, modifiée avec ref.</param>
+    /// <param name="tourJoueur">Vrai si le joueur a joué la carte.</param>
+    /// <param name="tourSaute">Indique avec out si le prochain tour est sauté.</param>
     public static void AppliquerEffetCarte(string carteJouee, ref string[] mainJoueur, ref string[] mainOrdinateur, string[] jeuCartes, ref int indexPaquet, ref string carteTable, bool tourJoueur, out bool tourSaute)
     {
         tourSaute = false;
@@ -420,6 +508,11 @@ public class FonctionProgram
         }
     }
 
+    /// <summary>
+    /// Affiche UNO quand une main ne contient plus qu'une carte.
+    /// </summary>
+    /// <param name="main">Main à vérifier.</param>
+    /// <param name="tourJoueur">Vrai si la main appartient au joueur.</param>
     public static void DetectionUno(string[] main, bool tourJoueur)
     {
         if (main.Length == 1)
@@ -435,6 +528,13 @@ public class FonctionProgram
         }
     }
 
+    /// <summary>
+    /// Vérifie si un joueur a gagné la partie.
+    /// </summary>
+    /// <param name="mainJoueur">Main du joueur.</param>
+    /// <param name="mainOrdinateur">Main de l'ordinateur.</param>
+    /// <param name="gagnant">Nom du gagnant, renvoyé avec out.</param>
+    /// <returns>Vrai si la partie est finie.</returns>
     public static bool VerifierFinPartie(string[] mainJoueur, string[] mainOrdinateur, out string gagnant)
     {
         gagnant = "";
@@ -454,11 +554,20 @@ public class FonctionProgram
         return false;
     }
 
+    /// <summary>
+    /// Vérifie si une carte spéciale ne doit pas commencer la partie.
+    /// </summary>
+    /// <param name="carte">Carte à vérifier.</param>
+    /// <returns>Vrai si la carte est spéciale au départ.</returns>
     private static bool EstCarteSpecialeDepart(string carte)
     {
         return carte == "+4" || carte == "Changement de couleur" || carte.Contains("+2") || carte.Contains("Passe ton tour");
     }
 
+    /// <summary>
+    /// Demande au joueur de choisir une couleur valide.
+    /// </summary>
+    /// <returns>Couleur choisie par le joueur.</returns>
     private static string ChoisirCouleurJoueur()
     {
         while (true)
@@ -475,6 +584,11 @@ public class FonctionProgram
         }
     }
 
+    /// <summary>
+    /// Choisit une couleur selon la main de l'ordinateur.
+    /// </summary>
+    /// <param name="mainOrdinateur">Main utilisée pour choisir la couleur.</param>
+    /// <returns>Couleur choisie par l'ordinateur.</returns>
     private static string ChoisirCouleurOrdinateur(string[] mainOrdinateur)
     {
         for (int iCarte = 0; iCarte < mainOrdinateur.Length; iCarte++)
